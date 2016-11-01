@@ -67,5 +67,7 @@ public class LoadMap : MonoBehaviour
         }
 
         mapRenderer.enabled = true;
+
+        SendMessage("MapUpdated");
     }
 }

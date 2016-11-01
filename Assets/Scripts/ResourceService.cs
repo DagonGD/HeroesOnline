@@ -6,4 +6,9 @@ public class ResourceService : MonoBehaviour {
 	void Start () {
 	
 	}
+
+    void MapUpdated()
+    {
+
+    }
 }
