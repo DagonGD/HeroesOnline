@@ -6,7 +6,7 @@ public class LoadMap : MonoBehaviour
     private const string ConsumerKey = "rr3PSu0EOYm1YdpR2kbRqIQzys3FyqwW";
     private const string MapType = "map";
     
-    public Renderer renderer;
+    public Renderer mapRenderer;
     public Vector2 PlayerPosition;
     public int Zoom;
     public int MapSize;
@@ -33,9 +33,9 @@ public class LoadMap : MonoBehaviour
         if(www.error == null)
         {
             yield return new WaitForSeconds(0.5f);
-            renderer.material.mainTexture = null;
+            mapRenderer.material.mainTexture = null;
             var texture = new Texture2D(MapSize, MapSize, TextureFormat.RGB24, false);
-            renderer.material.mainTexture = texture;
+            mapRenderer.material.mainTexture = texture;
             www.LoadImageIntoTexture(texture);
         }
         else
@@ -44,6 +44,6 @@ public class LoadMap : MonoBehaviour
             yield return new WaitForSeconds(1);
         }
 
-        renderer.enabled = true;
+        mapRenderer.enabled = true;
     }
 }
