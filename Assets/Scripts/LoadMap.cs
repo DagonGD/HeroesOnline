@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class LoadMap : MonoBehaviour
 {
@@ -11,6 +12,8 @@ public class LoadMap : MonoBehaviour
     public int Zoom;
     public int MapSize;
 
+	public Text txtCoords;
+
     // Use this for initialization
     void Start () {
         var url = string.Format("http://open.mapquestapi.com/staticmap/v4/getmap?key={0}&size={1},{1}&zoom={2}&type={3}&center={4},{5}", 
@@ -21,9 +24,14 @@ public class LoadMap : MonoBehaviour
         StartCoroutine(LoadImage(url));
 	}
 
-    void Update()
+	void GpsUpdated(Vector2 coords)
     {
+		txtCoords.text = string.Format ("X:{0}, y:{1}", coords.x, coords.y);
+    }
 
+    void GpsError(string msg)
+    {
+        txtCoords.text = msg;
     }
 
     private IEnumerator LoadImage(string url)

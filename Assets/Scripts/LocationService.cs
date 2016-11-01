@@ -1,17 +1,16 @@
-﻿using UnityEngine;
-using System.Collections;
-using UnityEngine.UI;
+﻿using System.Collections;
+using UnityEngine;
 
-public class TestLocationService : MonoBehaviour
+public class LocationService : MonoBehaviour
 {
-	public Text txtCoords;
-	
+    private bool initialized = false;
+
     IEnumerator Start()
     {
         // First, check if user has location service enabled
         if (!Input.location.isEnabledByUser)
         {
-			Output("GPD mot enabled");
+			Output("GPS isn't enabled");
             yield break;
         }
 
@@ -39,17 +38,19 @@ public class TestLocationService : MonoBehaviour
 			Output("Unable to determine device location");
             yield break;
         }
-        else
-        {
-            // Access granted and location value could be retrieved
-			Output("Location: " + Input.location.lastData.latitude + " " + Input.location.lastData.longitude + " " + Input.location.lastData.altitude + " " + Input.location.lastData.horizontalAccuracy + " " + Input.location.lastData.timestamp);
-        }
 
-        // Stop service if there is no need to query location updates continuously
-        Input.location.Stop();
+        initialized = true;
     }
 
+	void Update()
+	{
+        if (initialized)
+        {
+            SendMessage("GpsUpdated", new Vector2(Input.location.lastData.latitude, Input.location.lastData.longitude));
+        }
+	}
+
 	private void Output(string str){
-		txtCoords.text = str;
+        SendMessage("GpsError", str);
 	}
 }
