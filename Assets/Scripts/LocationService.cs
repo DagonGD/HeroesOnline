@@ -44,12 +44,13 @@ public class LocationService : MonoBehaviour
 
 	void Update()
 	{
+        //SendMessage("GpsUpdated", new Vector2(50.41762f, 30.53539f));
+        //return;
+
         if (initialized)
         {
             SendMessage("GpsUpdated", new Vector2(Input.location.lastData.latitude, Input.location.lastData.longitude));
-        }
-
-        //SendMessage("GpsUpdated", new Vector2(50.41762f, 30.53539f));
+        }        
     }
 
 	private void Output(string str){
