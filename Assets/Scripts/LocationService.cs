@@ -48,7 +48,9 @@ public class LocationService : MonoBehaviour
         {
             SendMessage("GpsUpdated", new Vector2(Input.location.lastData.latitude, Input.location.lastData.longitude));
         }
-	}
+
+        //SendMessage("GpsUpdated", new Vector2(50.41762f, 30.53539f));
+    }
 
 	private void Output(string str){
         SendMessage("GpsError", str);

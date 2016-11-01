@@ -8,25 +8,34 @@ public class LoadMap : MonoBehaviour
     private const string MapType = "map";
     
     public Renderer mapRenderer;
-    public Vector2 PlayerPosition;
     public int Zoom;
     public int MapSize;
+    public Text txtCoords;
+    public float distanceToUpdate;
 
-	public Text txtCoords;
+    private Vector2? MapCoords = null;
+    private int numberOfMapReuests = 0;
 
-    // Use this for initialization
     void Start () {
-        var url = string.Format("http://open.mapquestapi.com/staticmap/v4/getmap?key={0}&size={1},{1}&zoom={2}&type={3}&center={4},{5}", 
-            ConsumerKey, MapSize, Zoom, MapType, PlayerPosition.x, PlayerPosition.y);
-
-        Debug.Log(url);
-
-        StartCoroutine(LoadImage(url));
+        
 	}
 
 	void GpsUpdated(Vector2 coords)
     {
-		txtCoords.text = string.Format ("X:{0}, y:{1}", coords.x, coords.y);
+		txtCoords.text = string.Format ("X:{0}, Y:{1}, R:{2}", coords.x, coords.y, numberOfMapReuests);
+
+        if(!MapCoords.HasValue || Vector2.Distance(MapCoords.Value, coords) > distanceToUpdate)
+        {
+            MapCoords = coords;
+            numberOfMapReuests++;
+
+            var url = string.Format("http://open.mapquestapi.com/staticmap/v4/getmap?key={0}&size={1},{1}&zoom={2}&type={3}&center={4},{5}",
+            ConsumerKey, MapSize, Zoom, MapType, coords.x, coords.y);
+
+            Debug.Log(url);
+
+            StartCoroutine(LoadImage(url));
+        }
     }
 
     void GpsError(string msg)
