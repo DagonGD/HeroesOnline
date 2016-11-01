@@ -21,6 +21,11 @@ public class LoadMap : MonoBehaviour
         StartCoroutine(LoadImage(url));
 	}
 
+    void Update()
+    {
+
+    }
+
     private IEnumerator LoadImage(string url)
     {
         var www = new WWW(url);
